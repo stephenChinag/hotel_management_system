@@ -1,5 +1,9 @@
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import SignUp from "./pages/Signup";
+import RootLayout from "./pages/RootLayout";
 
 export default function App() {
-  return <div></div>;
+  const router = createBrowserRouter([{ path: "/", element: <RootLayout /> }]);
+
+  return <RouterProvider router={router} />;
 }
