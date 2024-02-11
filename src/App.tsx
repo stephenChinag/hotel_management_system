@@ -1,9 +1,9 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import SignUp from "./pages/Signup";
-import RootLayout from "./pages/RootLayout";
+
+import Layout from "./layout/Layout";
 
 export default function App() {
-  const router = createBrowserRouter([{ path: "/", element: <RootLayout /> }]);
+  const router = createBrowserRouter([{ path: "/", element: <Layout /> }]);
 
   return <RouterProvider router={router} />;
 }
