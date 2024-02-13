@@ -1,13 +1,17 @@
 import { useForm } from "react-hook-form";
 
-type RegisterFormData = {
+export type RegisterFormData = {
   firstname: string;
   lastname: string;
   email: string;
   password: string;
 };
 const Register = () => {
-  const { register, handleSubmit } = useForm<RegisterFormData>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFormData>();
   const onSubmit = handleSubmit((data) => {
     console.log(data);
   });
@@ -21,6 +25,7 @@ const Register = () => {
             className="border rounded w-full py-1 px-2 font-normal"
             {...register("firstname", { required: " First Name Is Required" })}
           />
+          {errors.firstname && <span>{errors.firstname.message} </span>}
         </label>
         <label className="text-gray-700 text-sm font-bold flex-1">
           Last Name
@@ -28,6 +33,7 @@ const Register = () => {
             className="border rounded w-full py-1 px-2 font-normal"
             {...register("lastname", { required: "Last Name is required" })}
           />
+          {errors.lastname && <span>{errors.lastname.message} </span>}
         </label>
       </div>
       <label className="text-gray-700 text-sm font-bold flex-1">
@@ -37,6 +43,7 @@ const Register = () => {
           className="border rounded w-full py-1 px-2 font-normal"
           {...register("email", { required: "email is required" })}
         />
+        {errors.email && <span>{errors.email.message} </span>}
       </label>
       <label className="text-gray-700 text-sm font-bold flex-1">
         Password
@@ -51,6 +58,7 @@ const Register = () => {
             },
           })}
         />
+        {errors.password && <span> {errors.password.message}</span>}
       </label>
       <span>
         <button
