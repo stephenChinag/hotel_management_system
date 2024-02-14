@@ -1,6 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Layout from "./layout/Layout";
 import Register from "./pages/Register";
+import Signup from "./pages/Signup";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -25,6 +26,14 @@ export default function App() {
       element: (
         <Layout>
           <Register />
+        </Layout>
+      ),
+    },
+    {
+      path: "/sign-in",
+      element: (
+        <Layout>
+          <Signup />
         </Layout>
       ),
     },
