@@ -3,7 +3,7 @@ import { useEffect } from "react";
 type ToastProps = {
   message: string;
   type: "SUCCESS" | "ERROR";
-  onClose: () => {};
+  onClose: () => void;
 };
 
 const Toast = ({ message, type, onClose }: ToastProps) => {
@@ -20,7 +20,7 @@ const Toast = ({ message, type, onClose }: ToastProps) => {
   const style =
     type === "SUCCESS"
       ? "fixed top-4 right-4 z-50 p-4 rounded-md bg-green-600 text-white max-w-md"
-      : "fixed top-4 right-4 z-50 p-4 rounded-md bg-green-600 text-white max-w-md";
+      : "fixed top-4 right-4 z-50 p-4 rounded-md bg-red-600 text-white max-w-md";
 
   return (
     <div className={style}>

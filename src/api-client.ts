@@ -7,6 +7,7 @@ export const register = async (formData: RegisterFormData) => {
     "http://13.48.114.201/api/registerandupdate_user/",
     {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
