@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
-import * as apiClient from "../api-client";
 import { useAppContext } from "../contexts/AppContext";
 import { useNavigate } from "react-router-dom";
+import { register, signin } from "../api-client";
 
 export type SignInFormData = {
   email: string;
@@ -13,27 +13,29 @@ const Signup = () => {
   const navigate = useNavigate();
   const { showToast } = useAppContext();
   const {
-    register,
+    register: formRegister,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignInFormData>();
+  } = useForm<SignInFormData>(); // Use SignInFormData type here
 
-  const mutation = useMutation(apiClient.signin, {
+  const mutation = useMutation(signin, {
     onSuccess: async () => {
       console.log("user has been signed In");
-      showToast({ message: "Login Succesfully ", type: "SUCCESS" });
+      showToast({ message: "Login Successfully", type: "SUCCESS" });
       navigate("/");
     },
     onError: (error: Error) => {
       showToast({
-        message: "Login Failed Username Or password Incorrect",
+        message: "Login Failed. Username or Password Incorrect",
         type: "ERROR",
       });
     },
   });
+
   const onSubmit = handleSubmit((data) => {
     mutation.mutate(data);
   });
+
   return (
     <form className="flex flex-col gap-5" onSubmit={onSubmit}>
       <h2 className="text-3xl font-bold"> Sign In</h2>
@@ -42,10 +44,10 @@ const Signup = () => {
         <input
           type="email"
           className="border rounded w-full py-1 px-2 font-normal"
-          {...register("email", { required: "email is required" })}
+          {...formRegister("email", { required: "Email is required" })}
         />
         {errors.email && (
-          <span className="text-red-500">{errors.email.message} </span>
+          <span className="text-red-500">{errors.email.message}</span>
         )}
       </label>
 
@@ -54,10 +56,10 @@ const Signup = () => {
         <input
           type="password"
           className="border rounded w-full py-1 px-2 font-normal"
-          {...register("password", { required: "password is required" })}
+          {...formRegister("password", { required: "Password is required" })}
         />
         {errors.password && (
-          <span className="text-red-500">{errors.password.message} </span>
+          <span className="text-red-500">{errors.password.message}</span>
         )}
       </label>
       <button

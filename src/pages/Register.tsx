@@ -1,8 +1,9 @@
+// Register.tsx
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
-import * as apiClient from "../api-client";
 import { useAppContext } from "../contexts/AppContext";
 import { useNavigate } from "react-router-dom";
+import { register } from "../api-client";
 
 export type RegisterFormData = {
   firstname: string;
@@ -10,16 +11,17 @@ export type RegisterFormData = {
   email: string;
   password: string;
 };
+
 const Register = () => {
   const navigate = useNavigate();
   const { showToast } = useAppContext();
   const {
-    register,
+    register: formRegister,
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterFormData>();
 
-  const mutation = useMutation(apiClient.register, {
+  const mutation = useMutation(register, {
     onSuccess: () => {
       showToast({ message: "Registration Success", type: "SUCCESS" });
       navigate("/");
@@ -32,6 +34,7 @@ const Register = () => {
   const onSubmit = handleSubmit((data) => {
     mutation.mutate(data);
   });
+
   return (
     <form className="flex flex-col gap-5" onSubmit={onSubmit}>
       <h2 className="text-3xl font-bold"> Create An Account</h2>
@@ -40,17 +43,23 @@ const Register = () => {
           First Name
           <input
             className="border rounded w-full py-1 px-2 font-normal"
-            {...register("firstname", { required: " First Name Is Required" })}
+            {...formRegister("firstname", {
+              required: "First Name Is Required",
+            })}
           />
-          {errors.firstname && <span>{errors.firstname.message} </span>}
+          {errors.firstname && (
+            <span className="text-red-500">{errors.firstname.message}</span>
+          )}
         </label>
         <label className="text-gray-700 text-sm font-bold flex-1">
           Last Name
           <input
             className="border rounded w-full py-1 px-2 font-normal"
-            {...register("lastname", { required: "Last Name is required" })}
+            {...formRegister("lastname", { required: "Last Name is required" })}
           />
-          {errors.lastname && <span>{errors.lastname.message} </span>}
+          {errors.lastname && (
+            <span className="text-red-500">{errors.lastname.message}</span>
+          )}
         </label>
       </div>
       <label className="text-gray-700 text-sm font-bold flex-1">
@@ -58,34 +67,35 @@ const Register = () => {
         <input
           type="email"
           className="border rounded w-full py-1 px-2 font-normal"
-          {...register("email", { required: "email is required" })}
+          {...formRegister("email", { required: "Email is required" })}
         />
-        {errors.email && <span>{errors.email.message} </span>}
+        {errors.email && (
+          <span className="text-red-500">{errors.email.message}</span>
+        )}
       </label>
       <label className="text-gray-700 text-sm font-bold flex-1">
         Password
         <input
-          className="border rounded w-full py-1 px-2 font-normal"
           type="password"
-          {...register("password", {
-            required: "password is required",
+          className="border rounded w-full py-1 px-2 font-normal"
+          {...formRegister("password", {
+            required: "Password is required",
             minLength: {
               value: 6,
-              message: " Password must be at least 6 characters",
+              message: "Password must be at least 6 characters",
             },
           })}
         />
-        {errors.password && <span> {errors.password.message}</span>}
+        {errors.password && (
+          <span className="text-red-500">{errors.password.message}</span>
+        )}
       </label>
-      <span>
-        <button
-          type="submit"
-          // onClick={onSubmit}
-          className="bg-blue-600 text-white p-2 rounded-lg font-bold hover:bg-blue-500"
-        >
-          Create Account
-        </button>
-      </span>
+      <button
+        type="submit"
+        className="bg-blue-600 text-white p-2 rounded-lg font-bold hover:bg-blue-500"
+      >
+        Create Account
+      </button>
     </form>
   );
 };
