@@ -14,7 +14,11 @@ type RegisterFormData = {
 };
 
 const Register = () => {
-  const { register, handleSubmit } = useForm<RegisterFormData>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFormData>();
 
   const navigate = useNavigate();
   const inputStyles =
@@ -73,6 +77,7 @@ const Register = () => {
             required
             className={inputStyles}
           />
+          {errors.firstname && <span> {errors.firstname.message}</span>}
 
           <input
             type="text"
@@ -80,12 +85,14 @@ const Register = () => {
             {...register("lastname", { required: "This Field Is Required" })}
             className={inputStyles}
           />
+          {errors.lastname && <span> {errors.lastname.message}</span>}
           <input
             type="email"
             placeholder="Mike@company.com"
             {...register("email", { required: "This Field is Required " })}
             className={inputStyles}
           />
+          {errors.email && <span> {errors.email.message} </span>}
 
           <input
             type="password"
@@ -96,6 +103,7 @@ const Register = () => {
             })}
             className={inputStyles}
           />
+          {errors.password && <span> {errors.password.message}</span>}
 
           <button
             type="submit"
