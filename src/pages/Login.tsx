@@ -1,145 +1,90 @@
-// // Login.tsx
+import { useState, FormEvent, ChangeEvent } from "react";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
-// import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import { ToastContainer, toast } from "react-toastify";
+const Login = () => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const navigate = useNavigate();
 
-// interface LoginProps {
-//   onRoleChange: (role: "customer" | "vendor") => void;
-// }
+  const inputStyles =
+    "border border-gray-300 sm:text-sm text-black rounded-lg block w-full p-2.5 focus:outline-none";
 
-// const Login: React.FC<LoginProps> = ({ onRoleChange }) => {
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const navigate = useNavigate();
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-//   const [isCustomer, setIsCustomer] = useState(true);
-//   const [loading, setLoading] = useState(false);
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      const response = await fetch("http://13.48.114.201/api/token/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-//   const handleRoleChange = () => {
-//     setIsCustomer(!isCustomer);
-//     onRoleChange(!isCustomer ? "customer" : "vendor");
-//   };
+      if (response.ok) {
+        const data = await response.json();
+        // Assuming the token is returned in the response data
+        const token = data.token;
+        // Store the token in localStorage or session storage for future use
+        localStorage.setItem("token", token);
+        // Redirect or navigate to the desired page
+        toast.success(" login succesfull");
+        navigate("/");
+      } else {
+        // Login failed
+        const errorData = await response.json();
+        toast.error(errorData.detail);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong. Please try again later.");
+    }
+  };
 
-//   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     setEmail(event.target.value);
-//   };
+  return (
+    <section className="container mx-auto">
+      <div className="p-6 space-y-4 md:space-y-6 sm:p-8 w-80 md:w-[70%] mx-auto">
+        <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl">
+          Login
+        </h1>
+        <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            required
+            className={inputStyles}
+            onChange={handleInputChange}
+          />
 
-//   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     setPassword(event.target.value);
-//   };
-//   const handleLogin = async () => {
-//     try {
-//       setLoading(true);
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+            className={inputStyles}
+            onChange={handleInputChange}
+          />
 
-//       const response = await fetch(
-//         "https://swoppiapp.onrender.com/swoppiApp/v1/auth/signIn",
-//         {
-//           method: "POST",
-//           headers: {
-//             "Content-Type": "application/json",
-//           },
-//           body: JSON.stringify({
-//             email,
-//             password,
-//           }),
-//         }
-//       );
+          <button
+            type="submit"
+            className="w-full bg-tertiary-dark focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+          >
+            Log In
+          </button>
+        </form>
+        <button className="text-blue-700 underline">Sign Up</button>
+      </div>
+    </section>
+  );
+};
 
-//       if (response.ok) {
-//         console.log("Login successful");
-//         navigate("/");
-//         // history.push("/dashboard"); // Redirect to dashboard or any desired page after successful login
-//       } else {
-//         console.error("Login failed");
-//         toast("Invalid User Name and password");
-//       }
-//     } catch (error) {
-//       console.error("Error during login:", error);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   return (
-//     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-//       <div className="bg-white p-8 rounded shadow-md w-full md:w-1/2 lg:w-1/3">
-//         <ToastContainer />
-//         <h2 className="text-2xl font-bold mb-4">
-//           {isCustomer ? "Customer" : "Vendor"} Login
-//         </h2>
-//         <form>
-//           {/* Your login form fields go here */}
-//           <div className="mb-4">
-//             <label
-//               className="block text-gray-700 text-sm font-bold mb-2"
-//               htmlFor="email"
-//             >
-//               Email
-//             </label>
-//             <input
-//               type="text"
-//               id="email"
-//               className="border border-gray-300 p-2 w-full"
-//               placeholder="Enter your Email"
-//               onChange={handleEmailChange}
-//             />
-//           </div>
-//           <div className="mb-4">
-//             <label
-//               className="block text-gray-700 text-sm font-bold mb-2"
-//               htmlFor="password"
-//             >
-//               Password
-//             </label>
-//             <input
-//               type="password"
-//               onChange={handlePasswordChange}
-//               id="password"
-//               className="border border-gray-300 p-2 w-full"
-//               placeholder="Enter your password"
-//             />
-//           </div>
-//           {/* Radio buttons for role selection */}
-//           <div className="mb-4">
-//             <label className="block text-gray-700 text-sm font-bold mb-2">
-//               Select Role:
-//             </label>
-//             <div className="flex">
-//               <label className="flex items-center mr-4">
-//                 <input
-//                   type="radio"
-//                   value="customer"
-//                   checked={isCustomer}
-//                   onChange={handleRoleChange}
-//                   className="mr-2"
-//                 />
-//                 Customer
-//               </label>
-//               <label className="flex items-center">
-//                 <input
-//                   type="radio"
-//                   value="vendor"
-//                   checked={!isCustomer}
-//                   onChange={handleRoleChange}
-//                   className="mr-2"
-//                 />
-//                 Vendor
-//               </label>
-//             </div>
-//           </div>
-//           <button
-//             type="submit"
-//             onClick={handleLogin}
-//             disabled={loading}
-//             className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition-all duration-300"
-//           >
-//             {loading ? "Loging In..." : "Login"}
-//           </button>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Login;
+export default Login;
