@@ -74,10 +74,11 @@ const Register = () => {
             type="text"
             placeholder="first name"
             {...register("firstname", { required: "This Field Is Required " })}
-            required
             className={inputStyles}
           />
-          {errors.firstname && <span> {errors.firstname.message}</span>}
+          {errors.firstname && (
+            <span className="text-red-500"> {errors.firstname.message}</span>
+          )}
 
           <input
             type="text"
@@ -85,14 +86,18 @@ const Register = () => {
             {...register("lastname", { required: "This Field Is Required" })}
             className={inputStyles}
           />
-          {errors.lastname && <span> {errors.lastname.message}</span>}
+          {errors.lastname && (
+            <span className="text-red-500"> {errors.lastname.message}</span>
+          )}
           <input
             type="email"
             placeholder="Mike@company.com"
             {...register("email", { required: "This Field is Required " })}
             className={inputStyles}
           />
-          {errors.email && <span> {errors.email.message} </span>}
+          {errors.email && (
+            <span className="text-red-500"> {errors.email.message} </span>
+          )}
 
           <input
             type="password"
@@ -103,7 +108,9 @@ const Register = () => {
             })}
             className={inputStyles}
           />
-          {errors.password && <span> {errors.password.message}</span>}
+          {errors.password && (
+            <span className="text-red-500"> {errors.password.message}</span>
+          )}
 
           <button
             type="submit"
