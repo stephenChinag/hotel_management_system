@@ -1,6 +1,8 @@
 // // api-client.ts
 
+import toast from "react-hot-toast";
 import { RegisterFormData } from "./pages/Register";
+import { useNavigate } from "react-router-dom";
 
 // import { SignInFormData } from "./pages/Signup";
 
@@ -17,9 +19,18 @@ export const register = async (formData: RegisterFormData): Promise<void> => {
       }
     );
 
-    if (!response.ok) {
+    // if (!response.ok) {
+    //   const errorData = await response.json();
+    //   throw new Error(errorData.message);
+    // }
+    if (response.ok) {
+      //  Registration successful, you can navigate to the login page or perform any other action
+      toast.success("signUp Succesfull");
+    } else {
+      //       // Registration failed
       const errorData = await response.json();
-      throw new Error(errorData.message);
+      console.error(errorData); // Log the error for debugging
+      toast.error("Failed to create user. Please try again later.");
     }
   } catch (error: any) {
     throw new Error(error.message);

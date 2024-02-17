@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
-
+import { useMutation } from "react-query";
+import * as apiClient from "../api-client";
 export type RegisterFormData = {
   firstname: string;
   lastname: string;
@@ -16,7 +17,15 @@ const Register = () => {
     formState: { errors },
   } = useForm<RegisterFormData>();
 
-  const navigate = useNavigate();
+  const mutation = useMutation(apiClient.register, {
+    onSuccess: () => {
+      console.log("Registration succesfukk");
+    },
+    onError: (error: Error) => {
+      console.log(error.message);
+    },
+  });
+
   const inputStyles =
     "border border-gray-300 sm:text-sm text-black rounded-lg block w-full p-2.5 focus:outline-none";
 
@@ -55,7 +64,7 @@ const Register = () => {
   //   }
   // };
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    mutation.mutate(data);
   });
   return (
     <section className="container mx-auto">
