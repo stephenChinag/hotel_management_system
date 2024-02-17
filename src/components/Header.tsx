@@ -1,41 +1,37 @@
+import { FaUserCircle } from "react-icons/fa";
+import { MdDarkMode, MdOutlineLightMode } from "react-icons/md";
 import { Link } from "react-router-dom";
 
-type HeaderProps = {
-  isLoggedIn: boolean;
-};
-
-const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
+const Header = () => {
   return (
-    <div className="bg-blue-800 py-6 ">
-      <div className="container mx-auto flex justify-between">
-        <span className="text-3xl text-white font-bold tracking-tight">
-          <Link to="/"> Mike Hotel Project </Link>
-        </span>
-        <span className="flex space-x-2">
-          {isLoggedIn ? (
-            <Link
-              to="/sign-out"
-              className="flex bg-white items-center text-blue-600 px-3 font-bold hover:bg-gray-100"
-            >
-              Sign Out
+    <header className="py-10 px-4 container mx-auto text-xl flex flex-wrap md:flex-nowrap items-center justify-between">
+      <div className="flex items-center w-full md:2/3">
+        <Link to="/" className="font-black text-tertiary-dark">
+          Mike Hotel Booking Project
+        </Link>
+        <ul className="flex items-center ml-5">
+          <li className="flex items-center">
+            <Link to="/auth">
+              <FaUserCircle className="cursor-pointer" />
             </Link>
-          ) : (
-            <Link
-              to="/sign-in"
-              className="flex bg-white items-center text-blue-600 px-3 font-bold hover:bg-gray-100"
-            >
-              Sign In
-            </Link>
-          )}
-          <Link
-            to="/home"
-            className="flex bg-white items-center text-blue-600 px-3 font-bold hover:bg-gray-100"
-          >
-            Home
-          </Link>
-        </span>
+          </li>
+          <li className="ml-2">
+            <MdDarkMode className="cursor-pointer" />
+          </li>
+        </ul>
       </div>
-    </div>
+      <ul className="flex items-center justify-between w-full md:w-1/3 mt-4">
+        <li className="hover:-translate-y-2 duration-500 transition-all">
+          <Link to="/">Home</Link>
+        </li>
+        <li className="hover:-translate-y-2 duration-500 transition-all">
+          <Link to="/rooms">Rooms</Link>
+        </li>
+        <li className="hover:-translate-y-2 duration-500 transition-all">
+          <Link to="/">Contact</Link>
+        </li>
+      </ul>
+    </header>
   );
 };
 
