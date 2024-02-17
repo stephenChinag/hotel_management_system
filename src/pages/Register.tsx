@@ -1,12 +1,8 @@
-import { ChangeEvent, FormEvent, useState } from "react";
-import toast from "react-hot-toast";
-import { AiFillGithub } from "react-icons/ai";
-import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
-import Toast from "../components/Toast";
+
 import { useForm } from "react-hook-form";
 
-type RegisterFormData = {
+export type RegisterFormData = {
   firstname: string;
   lastname: string;
   email: string;

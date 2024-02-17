@@ -1,29 +1,30 @@
 // // api-client.ts
 
-// import { RegisterFormData } from "./pages/Register";
+import { RegisterFormData } from "./pages/Register";
+
 // import { SignInFormData } from "./pages/Signup";
 
-// export const register = async (formData: RegisterFormData): Promise<void> => {
-//   try {
-//     const response = await fetch(
-//       "http://13.48.114.201/api/registerandupdate_user/",
-//       {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(formData),
-//       }
-//     );
+export const register = async (formData: RegisterFormData): Promise<void> => {
+  try {
+    const response = await fetch(
+      "http://13.48.114.201/api/registerandupdate_user/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    );
 
-//     if (!response.ok) {
-//       const errorData = await response.json();
-//       throw new Error(errorData.message);
-//     }
-//   } catch (error: any) {
-//     throw new Error(error.message);
-//   }
-// };
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message);
+    }
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};
 
 // export const signin = async (formData: SignInFormData): Promise<void> => {
 //   try {
