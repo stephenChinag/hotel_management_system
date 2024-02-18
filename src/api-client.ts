@@ -2,7 +2,6 @@
 
 import toast from "react-hot-toast";
 import { RegisterFormData } from "./pages/Register";
-import { useNavigate } from "react-router-dom";
 
 // import { SignInFormData } from "./pages/Signup";
 
