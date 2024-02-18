@@ -1,11 +1,13 @@
 import { FaUserCircle } from "react-icons/fa";
 import { MdDarkMode, MdOutlineLightMode } from "react-icons/md";
-import { Link } from "react-router-dom";
-import { useAppContext } from "../contexts/AppContext";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
-  const { isLoggedIn } = useAppContext();
-
+  const navigate = useNavigate();
+  const logOutHandler = () => {
+    localStorage.removeItem("token");
+    return navigate("/login");
+  };
   return (
     <header className="py-10 px-4 container mx-auto text-xl flex flex-wrap md:flex-nowrap items-center justify-between">
       <div className="flex items-center w-full md:2/3">
@@ -14,17 +16,9 @@ const Header = () => {
         </Link>
         <ul className="flex items-center ml-5">
           <li className="flex items-center">
-            {isLoggedIn ? (
-              <>
-                {" "}
-                <button>SignOut </button>
-                <Link to="/my-bookings"> MyBOOKINGS</Link>
-              </>
-            ) : (
-              <Link to="/auth">
-                <FaUserCircle className="cursor-pointer" />
-              </Link>
-            )}
+            <Link to="/auth">
+              <FaUserCircle className="cursor-pointer" />
+            </Link>
           </li>
           <li className="ml-2">
             <MdDarkMode className="cursor-pointer" />
@@ -40,6 +34,9 @@ const Header = () => {
         </li>
         <li className="hover:-translate-y-2 duration-500 transition-all">
           <Link to="/">Contact</Link>
+        </li>
+        <li className="hover:-translate-y-2 duration-500 transition-all">
+          <button onClick={logOutHandler}> Log Out</button>
         </li>
       </ul>
     </header>
