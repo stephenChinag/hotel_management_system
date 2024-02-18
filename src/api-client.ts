@@ -3,7 +3,7 @@
 import toast from "react-hot-toast";
 import { RegisterFormData } from "./pages/Register";
 
-// import { SignInFormData } from "./pages/Signup";
+import { SignInFormData } from "./pages/Login";
 
 export const register = async (formData: RegisterFormData): Promise<void> => {
   try {
@@ -11,6 +11,7 @@ export const register = async (formData: RegisterFormData): Promise<void> => {
       "http://13.48.114.201/api/registerandupdate_user/",
       {
         method: "POST",
+
         headers: {
           "Content-Type": "application/json",
         },
@@ -24,7 +25,6 @@ export const register = async (formData: RegisterFormData): Promise<void> => {
     // }
     if (response.ok) {
       //  Registration successful, you can navigate to the login page or perform any other action
-      toast.success("signUp Succesfull");
     } else {
       //       // Registration failed
       const errorData = await response.json();
@@ -36,29 +36,29 @@ export const register = async (formData: RegisterFormData): Promise<void> => {
   }
 };
 
-// export const signin = async (formData: SignInFormData): Promise<void> => {
-//   try {
-//     const response = await fetch("http://13.48.114.201/api/token/", {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify(formData),
-//     });
+export const login = async (formData: SignInFormData): Promise<void> => {
+  try {
+    const response = await fetch("http://13.48.114.201/api/token/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
 
-//     if (!response.ok) {
-//       const errorData = await response.json();
-//       throw new Error(errorData.message);
-//     }
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message);
+    }
 
-//     const responseData = await response.json();
-//     localStorage.setItem("accessToken", responseData.access);
-//     localStorage.setItem("refreshToken", responseData.refresh);
-//     console.log(responseData.refresh, responseData.access);
-//   } catch (error: any) {
-//     throw new Error(error.message);
-//   }
-// };
+    const responseData = await response.json();
+    localStorage.setItem("accessToken", responseData.access);
+    localStorage.setItem("refreshToken", responseData.refresh);
+    console.log(responseData.refresh, responseData.access);
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};
 
 // export const refreshAccessToken = async (): Promise<void> => {
 //   const refreshToken = localStorage.getItem("refreshToken");
@@ -83,3 +83,6 @@ export const register = async (formData: RegisterFormData): Promise<void> => {
 //     throw new Error(error.message);
 //   }
 // };
+export const getAccessToken = async (): Promise<string | null> => {
+  return localStorage.getItem("accessToken");
+};
