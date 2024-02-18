@@ -52,9 +52,11 @@ export const login = async (formData: SignInFormData): Promise<void> => {
     }
 
     const responseData = await response.json();
-    localStorage.setItem("accessToken", responseData.access);
-    localStorage.setItem("refreshToken", responseData.refresh);
-    console.log(responseData.refresh, responseData.access);
+    const token = responseData.access;
+    localStorage.setItem("token", token);
+    // localStorage.setItem("accessToken", responseData.access);
+    // localStorage.setItem("refreshToken", responseData.refresh);
+    // console.log(responseData.refresh, responseData.access);
   } catch (error: any) {
     throw new Error(error.message);
   }
