@@ -1,13 +1,24 @@
+import { useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { MdDarkMode, MdOutlineLightMode } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useRouteLoaderData } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  }, []);
+
   const logOutHandler = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("refreshToken");
+    setIsLoggedIn(false);
     return navigate("/login");
   };
+
   return (
     <header className="py-10 px-4 container mx-auto text-xl flex flex-wrap md:flex-nowrap items-center justify-between">
       <div className="flex items-center w-full md:2/3">
@@ -35,9 +46,20 @@ const Header = () => {
         <li className="hover:-translate-y-2 duration-500 transition-all">
           <Link to="/">Contact</Link>
         </li>
-        <li className="hover:-translate-y-2 duration-500 transition-all">
+
+        {isLoggedIn ? (
+          <li className="hover:-translate-y-2 duration-500 transition-all">
+            <button onClick={logOutHandler}> Log Out</button>
+          </li>
+        ) : (
+          <li className="hover:-translate-y-2 duration-500 transition-all">
+            <Link to="/login"> Log In</Link>
+          </li>
+        )}
+
+        {/* { token && <li className="hover:-translate-y-2 duration-500 transition-all">
           <button onClick={logOutHandler}> Log Out</button>
-        </li>
+        </li>} */}
       </ul>
     </header>
   );

@@ -53,7 +53,9 @@ export const login = async (formData: SignInFormData): Promise<void> => {
 
     const responseData = await response.json();
     const token = responseData.access;
+    const refreshToken = responseData.refresh;
     localStorage.setItem("token", token);
+    localStorage.setItem("refreshToken", refreshToken);
     // localStorage.setItem("accessToken", responseData.access);
     // localStorage.setItem("refreshToken", responseData.refresh);
     // console.log(responseData.refresh, responseData.access);
@@ -85,6 +87,6 @@ export const login = async (formData: SignInFormData): Promise<void> => {
 //     throw new Error(error.message);
 //   }
 // };
-export const getAccessToken = async (): Promise<string | null> => {
-  return localStorage.getItem("accessToken");
-};
+// export const getAccessToken = async (): Promise<string | null> => {
+//   return localStorage.getItem("accessToken");
+// };
