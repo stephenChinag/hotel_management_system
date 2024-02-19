@@ -5,17 +5,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../api-client";
 
 const Header = () => {
+  const token = localStorage.getItem("token");
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
-  });
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   setIsLoggedIn(!!token);
+  // });
 
   const logOutHandler = () => {
     logout();
-    setIsLoggedIn(false);
+    // setIsLoggedIn(false);
     navigate("/login");
   };
 
@@ -44,7 +44,7 @@ const Header = () => {
           <Link to="/rooms">Rooms</Link>
         </li>
 
-        {isLoggedIn ? (
+        {token ? (
           <li className="hover:-translate-y-2 duration-500 transition-all">
             <button onClick={logOutHandler}>Log Out</button>
           </li>

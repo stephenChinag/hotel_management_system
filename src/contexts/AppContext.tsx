@@ -5,9 +5,6 @@ type ToastMessage = {
   message: string;
   type: "SUCCESS" | "ERROR";
 };
-type auth = {
-  setLogin: boolean;
-};
 
 type AppContext = {
   showToast: (toastMessage: ToastMessage) => void;
