@@ -3,9 +3,15 @@ import { FaUserCircle } from "react-icons/fa";
 import { MdDarkMode } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../api-client";
+
 const Header = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  });
 
   const logOutHandler = () => {
     logout();

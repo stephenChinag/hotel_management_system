@@ -6,8 +6,6 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
-import { tokenLoader } from "./utils/auth";
-
 export default function App() {
   const router = createBrowserRouter([
     {
@@ -15,7 +13,7 @@ export default function App() {
       element: <RootLayout />,
       id: "root",
       errorElement: <p> Wrong route</p>,
-      loader: tokenLoader,
+
       children: [
         {
           index: true,

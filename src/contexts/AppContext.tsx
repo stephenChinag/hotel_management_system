@@ -1,10 +1,12 @@
 import React, { useContext, useState } from "react";
 import Toast from "../components/Toast";
-import { useQuery } from "react-query";
-import * as apiClient from "../api-client";
+
 type ToastMessage = {
   message: string;
   type: "SUCCESS" | "ERROR";
+};
+type auth = {
+  setLogin: boolean;
 };
 
 type AppContext = {

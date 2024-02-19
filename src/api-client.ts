@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { RegisterFormData } from "./pages/Register";
 
 import { SignInFormData } from "./pages/Login";
+import { useState } from "react";
 
 export const register = async (formData: RegisterFormData): Promise<void> => {
   try {
@@ -56,9 +57,6 @@ export const login = async (formData: SignInFormData): Promise<void> => {
     const refreshToken = responseData.refresh;
     localStorage.setItem("token", token);
     localStorage.setItem("refreshToken", refreshToken);
-    // localStorage.setItem("accessToken", responseData.access);
-    // localStorage.setItem("refreshToken", responseData.refresh);
-    // console.log(responseData.refresh, responseData.access);
   } catch (error: any) {
     throw new Error(error.message);
   }
