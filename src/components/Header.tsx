@@ -1,22 +1,16 @@
 import { useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
-import { MdDarkMode, MdOutlineLightMode } from "react-icons/md";
-import { Link, useNavigate, useRouteLoaderData } from "react-router-dom";
-
+import { MdDarkMode } from "react-icons/md";
+import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../api-client";
 const Header = () => {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
-  }, []);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   const logOutHandler = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("refreshToken");
+    logout();
     setIsLoggedIn(false);
-    return navigate("/login");
+    navigate("/login");
   };
 
   return (
@@ -49,17 +43,13 @@ const Header = () => {
 
         {isLoggedIn ? (
           <li className="hover:-translate-y-2 duration-500 transition-all">
-            <button onClick={logOutHandler}> Log Out</button>
+            <button onClick={logOutHandler}>Log Out</button>
           </li>
         ) : (
           <li className="hover:-translate-y-2 duration-500 transition-all">
-            <Link to="/login"> Log In</Link>
+            <Link to="/login">Log In</Link>
           </li>
         )}
-
-        {/* { token && <li className="hover:-translate-y-2 duration-500 transition-all">
-          <button onClick={logOutHandler}> Log Out</button>
-        </li>} */}
       </ul>
     </header>
   );

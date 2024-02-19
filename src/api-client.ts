@@ -64,29 +64,7 @@ export const login = async (formData: SignInFormData): Promise<void> => {
   }
 };
 
-// export const refreshAccessToken = async (): Promise<void> => {
-//   const refreshToken = localStorage.getItem("refreshToken");
-
-//   try {
-//     const response = await fetch("http://127.0.0.1:8000/api/token/refresh/", {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify({ refreshToken }),
-//     });
-
-//     if (!response.ok) {
-//       const errorData = await response.json();
-//       throw new Error(errorData.message);
-//     }
-
-//     const responseData = await response.json();
-//     localStorage.setItem("accessToken", responseData.access);
-//   } catch (error: any) {
-//     throw new Error(error.message);
-//   }
-// };
-// export const getAccessToken = async (): Promise<string | null> => {
-//   return localStorage.getItem("accessToken");
-// };
+export const logout = (): void => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("refreshToken");
+};

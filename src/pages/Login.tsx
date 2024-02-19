@@ -44,6 +44,9 @@ const Login = () => {
             {...register("email", { required: "this Field is required " })}
             className={inputStyles}
           />
+          {errors.email && (
+            <span className="text-red-500"> {errors.email.message} </span>
+          )}
 
           <input
             type="password"
@@ -51,7 +54,9 @@ const Login = () => {
             {...register("password", { required: "this Field Is requiired" })}
             className={inputStyles}
           />
-
+          {errors.password && (
+            <span className="text-red-500"> {errors.password.message} </span>
+          )}
           <button
             type="submit"
             className="w-full bg-tertiary-dark focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
