@@ -43,9 +43,6 @@ const Header = () => {
         <li className="hover:-translate-y-2 duration-500 transition-all">
           <Link to="/rooms">Rooms</Link>
         </li>
-        <li className="hover:-translate-y-2 duration-500 transition-all">
-          <Link to="/">Contact</Link>
-        </li>
 
         {isLoggedIn ? (
           <li className="hover:-translate-y-2 duration-500 transition-all">
