@@ -12,3 +12,15 @@ export function checkAuthToken() {
     return redirect("/registe");
   }
 }
+
+export function getExpirationDate() {
+  const stroedexperationDate = localStorage.getItem("expiration");
+  //   const ExpirationDate = new Date(stroedexperationDate)
+
+  if (stroedexperationDate !== null) {
+    const expirationDate = new Date(stroedexperationDate);
+    return expirationDate;
+  } else {
+    return;
+  }
+}

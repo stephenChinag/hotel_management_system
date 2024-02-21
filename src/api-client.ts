@@ -57,6 +57,9 @@ export const login = async (formData: SignInFormData): Promise<void> => {
     const refreshToken = responseData.refresh;
     localStorage.setItem("token", token);
     localStorage.setItem("refreshToken", refreshToken);
+    const expiration = new Date();
+    expiration.setHours(expiration.getHours() + 1);
+    localStorage.setItem("expiration", expiration.toDateString());
   } catch (error: any) {
     throw new Error(error.message);
   }
