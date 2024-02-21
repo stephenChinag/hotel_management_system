@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import * as apiClient from "../api-client";
 import { useAppContext } from "../contexts/AppContext";
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 export type RegisterFormData = {
   firstname: string;
   lastname: string;
@@ -35,6 +35,10 @@ const Register = () => {
   const onSubmit = handleSubmit((data) => {
     mutation.mutate(data);
   });
+
+  const onRedirect = () => {
+    navigate("/login");
+  };
   return (
     <section className="container mx-auto">
       <div className="p-6 space-y-4 md:space-y-6 sm:p-8 w-80 md:w-[70%] mx-auto">
@@ -94,7 +98,9 @@ const Register = () => {
           </button>
         </form>
 
-        <button className="text-blue-700 underline">login</button>
+        <button onClick={onRedirect} className="text-blue-700 underline">
+          login
+        </button>
       </div>
     </section>
   );
