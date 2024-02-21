@@ -22,6 +22,9 @@ const Login = () => {
       showToast({ message: "Login Succesfull", type: "SUCCESS" });
       navigate("/");
     },
+    onError: (error: Error) => {
+      showToast({ message: "Login Failed ", type: "ERROR" });
+    },
   });
 
   const inputStyles =

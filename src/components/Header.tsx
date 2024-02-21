@@ -8,11 +8,6 @@ const Header = () => {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   setIsLoggedIn(!!token);
-  // });
-
   const logOutHandler = () => {
     logout();
     // setIsLoggedIn(false);
@@ -45,9 +40,14 @@ const Header = () => {
         </li>
 
         {token ? (
-          <li className="hover:-translate-y-2 duration-500 transition-all">
-            <button onClick={logOutHandler}>Log Out</button>
-          </li>
+          <>
+            <Link to="/my-bookings"> My Bookings</Link>
+            <Link to="/my-hotels"> My Hotels</Link>
+
+            <li className="hover:-translate-y-2 duration-500 transition-all">
+              <button onClick={logOutHandler}>Log Out</button>
+            </li>
+          </>
         ) : (
           <li className="hover:-translate-y-2 duration-500 transition-all">
             <Link to="/login">Log In</Link>
