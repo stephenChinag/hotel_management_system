@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { MdDarkMode } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
