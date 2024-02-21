@@ -5,6 +5,8 @@ import Home from "./pages/Home";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import EditText from "./pages/edit";
+import { checkAuthToken } from "./utils/auth";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -26,6 +28,11 @@ export default function App() {
         {
           path: "login",
           element: <Login />,
+        },
+        {
+          path: "edit",
+          element: <EditText />,
+          loader: checkAuthToken,
         },
       ],
     },

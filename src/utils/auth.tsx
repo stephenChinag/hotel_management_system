@@ -1,17 +1,17 @@
-import { redirect } from "react-router-dom";
+import { LoaderFunction, redirect } from "react-router-dom";
 
 export function getAuthToken() {
   const token = localStorage.getItem("token");
   return token;
 }
 
-export function checkAuthToken() {
+export const checkAuthToken: LoaderFunction<any> = async () => {
   const token = getAuthToken();
 
   if (!token) {
-    return redirect("/registe");
+    return redirect("/auth");
   }
-}
+};
 
 export function getExpirationDate() {
   const stroedexperationDate = localStorage.getItem("expiration");

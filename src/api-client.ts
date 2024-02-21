@@ -60,6 +60,7 @@ export const login = async (formData: SignInFormData): Promise<void> => {
     const expiration = new Date();
     expiration.setHours(expiration.getHours() + 1);
     localStorage.setItem("expiration", expiration.toDateString());
+    console.log(expiration);
   } catch (error: any) {
     throw new Error(error.message);
   }
@@ -68,4 +69,5 @@ export const login = async (formData: SignInFormData): Promise<void> => {
 export const logout = (): void => {
   localStorage.removeItem("token");
   localStorage.removeItem("refreshToken");
+  localStorage.removeItem("expiration");
 };
